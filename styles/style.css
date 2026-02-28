@@ -70,7 +70,8 @@ ol {
 }
 
 .result__video-container {
-  width: 711px; /* Фиксируем ширину */
+  position: relative; /* Добавлено для прелоадера */
+  width: 711px;
   height: 386px;
   margin-bottom: 16px;
 }
@@ -79,11 +80,6 @@ ol {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-/* Минимальные корректировки */
-.result__video::-webkit-media-controls-panel {
-  /* Никаких трансформаций, только базовое поведение */
-  display: flex !important;
 }
 
 /* Форма поиска */
@@ -105,7 +101,7 @@ ol {
   font-size: 18px;
   font-weight: 400;
   line-height: 21.6px;
-  margin-bottom: 5px; /* Этого не хватает */
+  margin-bottom: 5px;
 }
 
 /* Поле ввода */
@@ -121,10 +117,15 @@ ol {
   line-height: 21.6px;
   padding: 0 0 3px 0;
   appearance: none;
+  cursor: text;
 }
 
 .search-form__textfield:focus {
   outline: none;
+}
+
+.search-form__textfield::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Чекбоксы */
@@ -138,6 +139,7 @@ ol {
   align-items: center;
   gap: 5px;
   cursor: pointer;
+  width: fit-content;
 }
 
 .search-form__label-text {
@@ -146,52 +148,41 @@ ol {
   line-height: 21.6px;
 }
 
-/* Псевдо-чекбокс (будем стилизовать позже) */
+/* Псевдо-чекбокс */
 .search-form__pseudo-checkbox {
   display: inline-block;
   width: 19px;
   height: 19px;
   background: transparent;
   border: 1px solid #fff;
-  padding: 1px; /* Внутренний отступ для закрашенного элемента */
-  position: relative; /* Для позиционирования псевдоэлемента */
+  padding: 1px;
+  position: relative;
 }
+
 .search-form__pseudo-checkbox::after {
-  content: ""; /* Обязательно для отображения */
+  content: "";
   display: block;
   width: 100%;
   height: 100%;
   background-color: #fff;
-  opacity: 0; /* Скрываем по умолчанию */
-}
-/* 2. Показываем закрашенный элемент при выбранном чекбоксе */
-.search-form__checkbox:checked + .search-form__pseudo-checkbox::after {
-  opacity: 1; /* Делаем видимым */
+  opacity: 0;
 }
 
-/* 3. Подчёркивание текста чекбокса при наведении */
+.search-form__checkbox:checked + .search-form__pseudo-checkbox::after {
+  opacity: 1;
+}
+
 .search-form__label:hover .search-form__label-text {
   text-decoration: underline;
 }
 
-/* 4. Фокус для текстового поля (факультативно) */
+/* Фокус для полей */
 .search-form__label:has(:focus-visible) {
   outline: 1px solid #fff;
   outline-offset: 2px;
 }
 
-/* 5. Фокус для чекбокса (факультативно) */
-.search-form__label:has(.search-form__checkbox:focus-visible) {
-  outline: 1px solid #fff;
-  outline-offset: 2px;
-}
-
-/* 6. Убираем outline у самого поля при фокусе */
-.search-form__textfield:focus {
-  outline: none;
-}
-
-/* Кнопка отправки */
+/* Кнопки */
 .button {
   font-size: 16px;
   font-weight: 700;
@@ -203,25 +194,22 @@ ol {
   cursor: pointer;
   font-family: "Fira Sans Condensed", sans-serif;
 }
-/* При наведении - подчеркивание текста */
+
 .button:hover {
   text-decoration: underline;
 }
 
-/* Активное состояние - меняем фон и цвет */
 .button:active {
   background: #545050;
   color: #fff;
   border-color: #545050;
-  text-decoration: none; /* Убираем подчеркивание при нажатии */
+  text-decoration: none;
 }
 
-/* Фокус - убираем стандартную обводку */
 .button:focus {
   outline: none;
 }
 
-/* Фокус-видимый - добавляем кастомную обводку */
 .button:focus-visible {
   outline: 1px solid #fff;
   outline-offset: 2px;
@@ -243,7 +231,7 @@ ol {
 
 /* Заголовок */
 .title {
-  font-family: "Oswald", sans-serif; /* Oswald только для заголовка */
+  font-family: "Oswald", sans-serif;
   font-size: 75px;
   font-weight: 700;
   line-height: 70.5px;
@@ -257,12 +245,12 @@ ol {
 
 /* Контейнер для списка карточек */
 .content__list-container {
+  position: relative; /* Добавлено для прелоадера */
   height: 298px;
   overflow-y: auto;
-  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 30px; /* Отступ между списком карточек и кнопкой */
+  gap: 30px;
 }
 
 /* Список карточек */
@@ -272,59 +260,51 @@ ol {
   gap: 30px;
 }
 
+/* Элемент списка */
+.content__list-item {
+  padding: 0 3px;
+  margin: 0;
+}
+
 /* Карточка видео */
 .content__card-link {
   display: block;
   text-decoration: none;
   color: #fff;
   width: 100%;
+  cursor: pointer;
 }
-/* Текущая (выбранная) карточка */
+
 .content__card-link_current {
-  background-color: #545050; /* Серый фон как в макете */
+  background-color: #545050;
 }
 
-/* Состояния карточки */
-
-/* При наведении - подчеркивание текста */
 .content__card-link:hover {
   text-decoration: underline;
 }
 
-/* Активное состояние (при удержании кнопки мыши) */
 .content__card-link:active {
-  background-color: #545050; /* Серый фон */
+  background-color: #545050;
 }
 
-/* Фокус - убираем стандартную обводку */
 .content__card-link:focus {
   outline: none;
 }
 
-/* Фокус-видимый - добавляем кастомную обводку */
 .content__card-link:focus-visible {
   outline: 1px solid #fff;
   outline-offset: 2px;
 }
-/* Добавляем отступы для элементов списка, чтобы обводка не прилипала */
-.content__list-item {
-  padding: 0 3px; /* Отступы слева и справа 3px */
-  margin: 0; /* Убедимся, что нет лишних отступов */
+
+.content__card-link_current:hover {
+  text-decoration: underline;
 }
 
-/* Убедимся, что ссылка занимает всю ширину с учетом отступов */
-
-/* При текущей карточке и активном состоянии текст должен быть виден */
 .content__card-link_current .content__video-card-title,
 .content__card-link_current .content__video-card-description,
 .content__card-link:active .content__video-card-title,
 .content__card-link:active .content__video-card-description {
-  color: #fff; /* Белый текст на сером фоне */
-}
-
-/* Убедимся, что подчеркивание работает правильно */
-.content__card-link_current:hover {
-  text-decoration: underline; /* Даже текущая карточка подчеркивается при наведении */
+  color: #fff;
 }
 
 .content__video-card {
@@ -336,17 +316,17 @@ ol {
 
 .content__video-card-description-container {
   flex-grow: 1;
-  max-width: calc(100% - 204px); /* 194px (картинка) + 10px (gap) */
+  max-width: calc(100% - 204px);
 }
 
 .content__video-card-title {
-  font-family: "Oswald", sans-serif; /* Oswald для названия видео */
+  font-family: "Oswald", sans-serif;
   font-size: 30px;
   font-weight: 700;
   line-height: 30px;
   text-transform: uppercase;
   margin-bottom: 6px;
-  max-width: 100%; /* Вместо 200px */
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -355,16 +335,12 @@ ol {
 .content__video-card-description {
   font-size: 18px;
   font-weight: 400;
-  line-height: 16.2px; /* Интерлиньяж меньше кегля - это правильно для брутальности */
+  line-height: 16.2px;
   max-width: 100%;
-
-  /* line-clamp для 4 строк */
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
-
-  /* Страховка */
   max-height: calc(16.2px * 4);
   word-break: break-word;
 }
@@ -374,14 +350,6 @@ ol {
   height: 103px;
   object-fit: cover;
 }
-/* Дополнительно: ограничим текст, чтобы не наезжал на картинку */
-.content__video-card-title,
-.content__video-card-description {
-  max-width: 100%; /* Теперь ограничение через родительский контейнер */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
 /* Кнопка "Показать еще" */
 .more-button {
@@ -389,6 +357,7 @@ ol {
   height: 34px;
   margin-top: 30px;
   border: 1px solid #fff;
+  cursor: pointer;
 }
 
 /* Скрытый элемент для доступности */
@@ -402,30 +371,8 @@ ol {
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
-/* Шаг 7. Кликабельность */
-.search-form__label,
-.button,
-.content__card-link,
-.more-button {
-  cursor: pointer;
-}
 
-.search-form__checkbox,
-.search-form__textfield {
-  cursor: pointer;
-}
-
-.search-form__textfield {
-  cursor: text;
-}
-
-/* Шаг 8. Позиционирование прелоадеров */
-.result__video-container,
-.content__list-container {
-  position: relative;
-}
-
-/* Стили для прелоадера (дублируем из preloader.css для уверенности) */
+/* Стили для прелоадера */
 .preloader {
   position: absolute;
   top: 0;
