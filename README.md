@@ -40,7 +40,7 @@ REST API — получение данных о видео
 Клонировать репозиторий:
 
 bash
-git clone https://github.com/твой-логин/posmotri-v-okno-fd.git
+git clone https://github.com/Kolchan1477/posmotri-v-okno-fd
 Открыть index.html в браузере
 
 Или используй Live Server в VS Code для автоперезагрузки.
