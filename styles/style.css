@@ -327,9 +327,8 @@ fieldset {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  letter-spacing: -1px; /* оставляем, чтобы влезало */
-  width: fit-content; /* ширина только по контенту */
-  max-width: 100%;
+  letter-spacing: -1px;
+  width: fit-content;
   display: inline-block;
 }
 
